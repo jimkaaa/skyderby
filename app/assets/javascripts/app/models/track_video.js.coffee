@@ -14,6 +14,30 @@ class Skyderby.models.TrackVideo extends Backbone.Model
 
     return []
 
+  result_on_time: (cur_time) ->
+    time = cur_time - @get('video_offset')
+
+    return null if time < 0
+
+    track_time = time + Number(@get('track_offset'))
+
+    for point, i in @get('highlight_result')
+      continue if i == 0
+      prev_point = @get('highlight_result')[i - 1]
+      if prev_point.fl_time <= track_time <= point.fl_time
+        [floor, ceil] = [prev_point, point]
+
+    return null if (!floor || ! ceil)
+
+    time_from_start = track_time - floor.fl_time
+
+    if floor.fl_time == ceil.fl_time
+      return floor.distance
+    else
+      interpolation_factor = 
+        time_from_start / (Number(ceil.fl_time) - Number(floor.fl_time))
+      return floor.distance + (ceil.distance - floor.distance) * interpolation_factor;
+
   data_on_time: (cur_time) ->
     time = cur_time - @get('video_offset')
 

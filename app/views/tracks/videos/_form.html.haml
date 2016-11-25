@@ -26,8 +26,6 @@
         %span.input-group-btn
           %button#set-current-time.btn.btn-default= t '.set'
 
-  %hr
-
   .row
     .col-sm-4
       %h3= t 'activerecord.attributes.track_videos.track_offset'
@@ -46,6 +44,19 @@
         %span.input-group-btn
           %button#inc-track-offset.btn.btn-default
             %i.fa.fa-chevron-right
+
+  %hr
+
+  .row
+    .col-sm-4
+      %h3
+        Highlight result (optional)
+    .col-sm-8
+      = select 'track_video[highlight_result]', 'task', %w(distance speed time)
+      From:
+      = text_field_tag 'track_video[highlight_result][from_altitude]', 3000
+      to:
+      = text_field_tag 'track_video[highlight_result][to_altitude]', 2000
 
   .row
     .top-buffer-30

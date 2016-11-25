@@ -1,5 +1,6 @@
-%tr{id: (dom_id(@weather_datum) if @weather_datum.persisted?)}
-  = form_for [@weather_datumable, @weather_datum], remote: true do |f|
+
+= form_for [@weather_datumable, @weather_datum], remote: true do |f|
+  %tr{id: (dom_id(@weather_datum) if @weather_datum.persisted?)}
     = hidden_field_tag :altitude_unit, @view_units[:altitude]
     = hidden_field_tag :wind_speed_unit, @view_units[:wind_speed]
     %td
@@ -21,5 +22,5 @@
     %td
       = f.text_field :wind_direction, class: 'form-control text-right', placeholder: '0-359°'
     %td
-      = f.button class: 'btn-link' do
+      = f.submit class: 'btn-link' do
         %i.fa.fa-2x.fa-angle-double-right

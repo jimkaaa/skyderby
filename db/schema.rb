@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160930170247) do
+ActiveRecord::Schema.define(version: 20161115073815) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
 
   create_table "assignments", force: :cascade do |t|
     t.integer "user_id"
@@ -287,12 +288,13 @@ ActiveRecord::Schema.define(version: 20160930170247) do
 
   create_table "track_videos", force: :cascade do |t|
     t.integer  "track_id"
-    t.string   "url",          limit: 510
-    t.decimal  "video_offset",             precision: 10, scale: 2
-    t.decimal  "track_offset",             precision: 10, scale: 2
+    t.string   "url",              limit: 510
+    t.decimal  "video_offset",                 precision: 10, scale: 2
+    t.decimal  "track_offset",                 precision: 10, scale: 2
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "video_code",   limit: 510
+    t.string   "video_code",       limit: 510
+    t.hstore   "highlight_result"
   end
 
   add_index "track_videos", ["track_id"], name: "index_track_videos_on_track_id", using: :btree

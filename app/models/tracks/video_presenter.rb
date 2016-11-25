@@ -15,7 +15,8 @@ class Tracks::VideoPresenter
       video_code: video_code,
       video_offset: video_offset,
       track_offset: track_offset,
-      points: track_points.to_json.html_safe
+      points: track_points.to_json.html_safe,
+      highlighted_result: highlighted_result.to_json.html_safe
     }
   end
 
@@ -30,11 +31,24 @@ class Tracks::VideoPresenter
         @track.points.trimmed(seconds_before_start: 20).freq_1Hz.pluck_to_hash(
           "gps_time_in_seconds - #{start_time_in_seconds} AS fl_time",
           "#{@track.point_altitude_field} AS altitude",
+          :latitude,
+          :longitude,
           :h_speed,
           :v_speed,
           'CASE WHEN v_speed = 0 THEN h_speed / 0.1
                 ELSE h_speed / ABS(v_speed)
           END AS glide_ratio')
       end
+  end
+
+  def highlighted_result
+    tmp_distance = 0.0
+    trimmed_points = WindowRangeFinder.new(track_points).execute(from_altitude: video.highlight_result['from_altitude'].to_f, to_altitude: video.highlight_result['to_altitude'].to_f).points
+    ([trimmed_points.first] + trimmed_points).each_cons(2).map do |pair|
+      { 
+        fl_time: pair.last[:fl_time], 
+        distance: (tmp_distance += TrackSegment.new(pair).distance).round
+      }
+    end
   end
 end

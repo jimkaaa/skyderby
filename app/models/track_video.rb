@@ -13,6 +13,8 @@
 #
 
 class TrackVideo < ActiveRecord::Base
+  store_accessor :highlight_result
+
   belongs_to :track
 
   validates :url, presence: true

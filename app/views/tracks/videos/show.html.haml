@@ -15,6 +15,13 @@
         .col-sm-12
           .videowrapper
             #player
+      .row
+        .col-sm-12
+          Distance:
+          %span#highlighted-result
+        .col-sm-12
+          .progress
+            .progress-bar#result-progress{role: "progressbar", 'aria-valuemin': "0", 'aria-valuemax': "100", style: "width: 60%;"}
       .row.track-indicators
         .col-md-11.col-md-offset-1.col-sm-12
           .row
@@ -65,6 +72,7 @@
     track_video.set('video_code',   data_div.data('video-code'))
     track_video.set('video_offset', data_div.data('video-offset'))
     track_video.set('track_offset', data_div.data('track-offset'))
+    track_video.set('highlight_result', data_div.data('highlighted-result'))
 
     view = new Skyderby.views.TrackReplayView({
       model: track_video,

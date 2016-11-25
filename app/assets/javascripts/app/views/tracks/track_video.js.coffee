@@ -53,3 +53,9 @@ class Skyderby.views.TrackReplayView extends Backbone.View
       @$('#p_cur_gr').text('-.--')
       @$('#p_cur_elev').text('---')
       @$('#p_elev_diff').text('---')
+
+    highlighted_result = @model.result_on_time(cur_time) || '---'
+    @$('#highlighted-result').text(highlighted_result)
+
+    if el && 3000 >= el.altitude >= 2000
+      @$('#result-progress').css('width', "#{(el.altitude - 3000) / (-10)}%")

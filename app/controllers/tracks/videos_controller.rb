@@ -83,7 +83,8 @@ class Tracks::VideosController < ApplicationController
       :url,
       :video_code,
       :video_offset,
-      :track_offset
+      :track_offset,
+      highlight_result: [:task, :from_altitude, :to_altitude]
     )
   end
 end
