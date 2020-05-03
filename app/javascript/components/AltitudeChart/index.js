@@ -5,8 +5,8 @@ import Highchart from 'components/Highchart'
 import useChartOptions from './useChartOptions'
 import { ChartContainer } from './elements'
 
-const AltitudeChart = ({ points, children }) => {
-  const options = useChartOptions(points)
+const AltitudeChart = ({ points, children, options: additionalOptions = {} }) => {
+  const options = useChartOptions(points, additionalOptions)
 
   return (
     <>
@@ -26,7 +26,8 @@ AltitudeChart.propTypes = {
       vSpeed: PropTypes.number
     })
   ).isRequired,
-  children: PropTypes.node
+  children: PropTypes.func,
+  options: PropTypes.object
 }
 
 export default AltitudeChart
